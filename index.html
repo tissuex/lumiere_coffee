@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -364,7 +365,7 @@
       border-radius: 4px;
       overflow: hidden;
       background: var(--cream-dark);
-      aspect-ratio: 3/4;
+      aspect-ratio: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -395,8 +396,6 @@
       padding-top: 2.5rem;
       border-top: 1px solid rgba(201,150,90,0.2);
     }
-
-    .stat-item {}
 
     .stat-num {
       font-family: 'Cormorant Garamond', serif;
@@ -540,41 +539,26 @@
     .menu-card-featured .menu-card-footer { border-color: rgba(201,150,90,0.2); }
     .menu-card-featured .menu-add { background: var(--gold); }
 
-    /* MENU SHOWCASE */
-    .menu-showcase {
-      position: relative;
+    /* MENU SHOWCASE — teks di luar gambar */
+    .menu-showcase-wrap {
       margin-top: 3.5rem;
-      border-radius: 4px;
-      overflow: hidden;
-      height: 320px;
     }
 
-    .menu-showcase-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transform: scale(1.04);
-      transition: transform 6s ease;
-    }
-
-    .menu-showcase:hover .menu-showcase-img {
-      transform: scale(1);
-    }
-
-    .menu-showcase-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        120deg,
-        rgba(28,15,7,0.82) 0%,
-        rgba(28,15,7,0.45) 55%,
-        rgba(28,15,7,0.1) 100%
-      );
+    .menu-showcase-caption {
       display: flex;
-      align-items: center;
-      padding: 3rem 4rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 1.8rem 0;
+      border-top: 1px solid rgba(201,150,90,0.2);
+      border-bottom: 1px solid rgba(201,150,90,0.2);
+      margin-bottom: 1.2rem;
+    }
+
+    .menu-showcase-caption-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
     }
 
     .menu-showcase-tag {
@@ -583,36 +567,44 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--gold);
-      border: 1px solid rgba(201,150,90,0.45);
-      padding: 0.3rem 0.9rem;
-      margin-bottom: 1rem;
     }
 
     .menu-showcase-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
       font-weight: 300;
-      color: var(--cream);
-      line-height: 1.15;
-      margin-bottom: 0.8rem;
+      color: var(--espresso);
+      line-height: 1.2;
     }
 
     .menu-showcase-title em {
       font-style: italic;
-      color: var(--gold-light);
+      color: var(--mocha);
     }
 
     .menu-showcase-desc {
       font-size: 0.88rem;
-      color: rgba(245,239,228,0.65);
+      color: var(--text-muted);
       font-weight: 300;
-      max-width: 340px;
+      max-width: 360px;
       line-height: 1.7;
+      align-self: center;
     }
 
-    .menu-showcase-inner {
-      display: flex;
-      flex-direction: column;
+    /* Gambar tanpa zoom, tanpa overlay */
+    .menu-showcase-img-wrap {
+      margin: 15px;
+      border-radius: 120px;
+      overflow: hidden;
+      height: auto;
+    }
+
+    .menu-showcase-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     /* EXPERIENCE */
@@ -859,8 +851,6 @@
       text-transform: uppercase;
     }
 
-
-
     /* CONTACT US */
     .contact-us {
       background: var(--espresso);
@@ -932,8 +922,6 @@
       border-bottom: 1px solid rgba(201,150,90,0.15);
     }
 
-    .footer-brand {}
-
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.8rem;
@@ -963,7 +951,6 @@
     }
 
     .footer-col ul { list-style: none; }
-
     .footer-col li { margin-bottom: 0.6rem; }
 
     .footer-col a {
@@ -1029,6 +1016,7 @@
       section { padding: 4rem 2rem; }
       .menu-grid, .test-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
+      .menu-showcase-caption { flex-direction: column; gap: 0.8rem; }
     }
   </style>
 </head>
@@ -1042,7 +1030,6 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#visit">Visit Us</a></li>
     </ul>
-
   </nav>
 
   <!-- HERO -->
@@ -1062,28 +1049,21 @@
     <div class="hero-visual reveal">
       <div class="hero-circle">
         <svg class="coffee-cup-svg" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Steam -->
           <path d="M80 30 Q84 18 80 8" stroke="#C9965A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
           <path d="M100 28 Q104 14 100 4" stroke="#C9965A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
           <path d="M120 30 Q116 18 120 8" stroke="#C9965A" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
-          <!-- Cup -->
           <path d="M50 55 L60 160 Q100 175 140 160 L150 55 Z" fill="#3D2010" stroke="#5C3A1E" stroke-width="1"/>
-          <!-- Coffee surface -->
           <ellipse cx="100" cy="58" rx="50" ry="10" fill="#6B3E1E"/>
           <ellipse cx="100" cy="58" rx="42" ry="7" fill="#8B5E3C"/>
-          <!-- Latte art -->
           <path d="M82 56 Q100 48 118 56 Q100 64 82 56 Z" fill="#C9965A" opacity="0.6"/>
           <path d="M88 58 Q100 52 112 58" stroke="#C9965A" stroke-width="1" fill="none" opacity="0.4"/>
-          <!-- Handle -->
           <path d="M148 80 Q174 80 174 110 Q174 140 148 140" stroke="#5C3A1E" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <!-- Saucer -->
           <ellipse cx="100" cy="168" rx="70" ry="12" fill="#5C3A1E"/>
           <ellipse cx="100" cy="165" rx="75" ry="8" fill="#3D2010"/>
         </svg>
         <div class="hero-ring"></div>
         <div class="hero-dot"></div>
       </div>
-
     </div>
   </section>
 
@@ -1097,7 +1077,6 @@
       <span class="marquee-item">Artisan Pastries <span class="marquee-dot">◆</span></span>
       <span class="marquee-item">Third Wave Coffee <span class="marquee-dot">◆</span></span>
       <span class="marquee-item">Lumière Coffee <span class="marquee-dot">◆</span></span>
-      <!-- dupe -->
       <span class="marquee-item">Single Origin <span class="marquee-dot">◆</span></span>
       <span class="marquee-item">Hand Roasted <span class="marquee-dot">◆</span></span>
       <span class="marquee-item">Specialty Coffee <span class="marquee-dot">◆</span></span>
@@ -1148,6 +1127,7 @@
         <h2>Crafted with <em>Intention</em></h2>
       </div>
     </div>
+
     <div class="menu-grid reveal">
       <div class="menu-card menu-card-featured">
         <span class="menu-card-tag">★ Signature</span>
@@ -1156,7 +1136,6 @@
         <p>Caramel Macchiato adalah minuman kopi klasik yang memadukan espresso, susu steam, dan saus karamel. Kombinasi rasa manis karamel dengan pahitnya espresso menciptakan harmoni rasa yang nikmat dan memanjakan lidah.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 12.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
       <div class="menu-card">
@@ -1166,7 +1145,6 @@
         <p>Gula Aren Coffee adalah perpaduan espresso, susu hangat, dan manis alami gula aren yang menciptakan rasa lembut dan nikmat.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 12.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
       <div class="menu-card">
@@ -1176,7 +1154,6 @@
         <p>Butter Scotch Coffee adalah minuman kopi yang memadukan rasa khas butterscotch yang manis dan karamel dengan kekuatan aroma kopi, menciptakan sensasi hangat, lembut, dan memanjakan di setiap tegukan.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 12.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
       <div class="menu-card">
@@ -1186,7 +1163,6 @@
         <p>Kopi susu adalah minuman kopi klasik yang memadukan espresso dengan susu yang di-steam, menghasilkan tekstur lembut dan rasa yang seimbang.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 10.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
       <div class="menu-card">
@@ -1196,7 +1172,6 @@
         <p>Matcha Latte adalah perpaduan lembut bubuk teh hijau pilihan dengan susu hangat yang menghadirkan rasa halus, sedikit pahit, dan menenangkan dalam setiap tegukan.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 12.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
       <div class="menu-card">
@@ -1206,21 +1181,13 @@
         <p>Berbagai macam makanan ringan yang cocok dinikmati bersama kopi.</p>
         <div class="menu-card-footer">
           <span class="menu-price">Rp 10.000</span>
-          <!-- <button class="menu-add">+</button> -->
         </div>
       </div>
     </div>
 
-    <!-- ALL MENU SHOWCASE -->
-    <div class="menu-showcase reveal">
-      <img src="img/all_menu.jpeg" alt="Semua Menu Lumière" class="menu-showcase-img" />
-      <div class="menu-showcase-overlay">
-        <div class="menu-showcase-inner">
-          <span class="menu-showcase-tag">Our Complete Menu</span>
-          <h3 class="menu-showcase-title">Semua tersedia <em>untuk kamu</em></h3>
-          <p class="menu-showcase-desc">Dari kopi single origin hingga makanan ringan — pilihan lengkap yang siap memanjakan selera.</p>
-        </div>
-      </div>
+    <!-- ALL MENU SHOWCASE — teks di LUAR gambar, gambar tanpa zoom -->
+    <div class="menu-showcase-img-wrap">
+      <img src="img/all_menu.jpeg" alt="Semua Menu Lumière" />
     </div>
   </section>
 
@@ -1249,30 +1216,30 @@
         <div class="test-author">
           <div class="test-avatar">A</div>
           <div>
-            <div class="test-name">Anindita R.</div>
-            <div class="test-loc">Graphic Designer · Jakarta Selatan</div>
+            <div class="test-name">Anggie O.</div>
+            <div class="test-loc">Graphic Designer · Kotabumi Utara</div>
           </div>
         </div>
       </div>
       <div class="test-card">
         <div class="test-stars">★★★★★</div>
-        <blockquote>"Single Origin V60-nya benar-benar mengubah cara saya melihat kopi. Baru di sini saya paham betapa kompleks dan indahnya rasa kopi Indonesia."</blockquote>
+        <blockquote>"Kopi susu nya enak banget, cocok dinikmati bersama teman."</blockquote>
         <div class="test-author">
           <div class="test-avatar">B</div>
           <div>
-            <div class="test-name">Bima S.</div>
-            <div class="test-loc">Arsitek · Kemang</div>
+            <div class="test-name">Azhar K.</div>
+            <div class="test-loc">Arsitek · Gelok</div>
           </div>
         </div>
       </div>
       <div class="test-card">
         <div class="test-stars">★★★★★</div>
-        <blockquote>"Sering remote working dari sini. Ambiensnya bikin fokus, kopinya ga bikin deg-degan, dan ada colokan di tiap meja. Perfect remote work spot!"</blockquote>
+        <blockquote>"Sering remote working dari sini. Kopinya bikin fokus, Perfect buat nemenin remote work!"</blockquote>
         <div class="test-author">
           <div class="test-avatar">C</div>
           <div>
             <div class="test-name">Clara M.</div>
-            <div class="test-loc">Content Creator · Menteng</div>
+            <div class="test-loc">Content Creator · Tabak</div>
           </div>
         </div>
       </div>
@@ -1289,25 +1256,25 @@
           <span class="visit-icon">📍</span>
           <div>
             <h4>Lokasi</h4>
-            <p>Jl. Kemang Raya No. 18<br>Jakarta Selatan 12730</p>
+            <p>Jl. Yos Sudarso, Madukoro, Kec. Kotabumi Utara, Kabupaten Lampung Utara, Lampung 34511</p>
           </div>
         </div>
         <div class="visit-row">
           <span class="visit-icon">🕐</span>
           <div>
             <h4>Jam Buka</h4>
-            <p>Senin – Jumat: 07.00 – 22.00<br>Sabtu – Minggu: 08.00 – 23.00</p>
+            <p>Setiap Hari : 08.00 – 21.00</p>
           </div>
         </div>
         <div class="visit-row">
           <span class="visit-icon">📞</span>
           <div>
             <h4>Hubungi Kami</h4>
-            <p>+62 21 7812 3456<br>hello@lumierecoffee.id</p>
+            <p>+62 819 4344 5436</p>
           </div>
         </div>
       </div>
-      <a href="tel:+622178123456" class="btn-primary" style="display: inline-block;"><span>Hubungi Kami</span></a>
+      <a href="https://wa.me/6281943445436?text=Halo%20Lumi%C3%A8re%20Coffee%2C%20saya%20ingin%20bertanya..." class="btn-primary" style="display: inline-block;"><span>Hubungi Kami</span></a>
     </div>
     <div class="visit-map">
       <iframe
@@ -1321,7 +1288,6 @@
     </div>
   </section>
 
-
   <!-- CONTACT US -->
   <section class="contact-us">
     <div class="reveal">
@@ -1329,7 +1295,7 @@
       <h2>Ada Pertanyaan? <em>Tanya Langsung</em></h2>
       <p>Kami siap membantu kamu — dari reservasi meja, informasi menu, hingga pertanyaan lainnya. Chat kami sekarang via WhatsApp!</p>
       <a
-        href="https://wa.me/628XXXXXXXXXX?text=Halo%20Lumi%C3%A8re%20Coffee%2C%20saya%20ingin%20bertanya..."
+        href="https://wa.me/6281943445436?text=Halo%20Lumi%C3%A8re%20Coffee%2C%20saya%20ingin%20bertanya..."
         class="btn-whatsapp"
         target="_blank"
         rel="noopener noreferrer">
@@ -1348,7 +1314,7 @@
         <span class="footer-logo">Lumière <span>Coffee</span></span>
         <p class="footer-tagline">Secangkir kopi yang baik bukan sekadar minuman — ia adalah momen, kenangan, dan cerita.</p>
       </div>
-      <div class="footer-col">
+      <!-- <div class="footer-col">
         <h5>Menu</h5>
         <ul>
           <li><a href="#">Espresso</a></li>
@@ -1356,8 +1322,8 @@
           <li><a href="#">Cold Brew</a></li>
           <li><a href="#">Pastry</a></li>
         </ul>
-      </div>
-      <div class="footer-col">
+      </div> -->
+      <!-- <div class="footer-col">
         <h5>Info</h5>
         <ul>
           <li><a href="#">Our Story</a></li>
@@ -1365,29 +1331,34 @@
           <li><a href="#">Karir</a></li>
           <li><a href="#">Press</a></li>
         </ul>
-      </div>
+      </div> -->
       <div class="footer-col">
         <h5>Kontak</h5>
         <ul>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">WhatsApp</a></li>
-          <li><a href="#">Email</a></li>
-          <li><a href="#">Maps</a></li>
+          <li><a href="https://www.instagram.com/lumiere.coffe/"> <i class="fa-brands fa-instagram"></i> Instagram</a></li>
+          <li><a href="https://wa.me/6281943445436?text=Halo%20Lumi%C3%A8re%20Coffee%2C%20saya%20ingin%20bertanya..."> <i class="fa-brands fa-whatsapp"></i> WhatsApp</a></li>
+          <!-- <li><a href="#">Email</a></li> -->
+          <li><a href="https://www.google.com/maps/place/Lumière+Coffee/@-4.7775235,104.8385857,17z/data=!3m1!4b1!4m6!3m5!1s0x2e38af000b72d533:0x89598480a6aaab41!8m2!3d-4.7775235!4d104.8385857!16s%2Fm%2F01q2j9j"> <i class="fa-solid fa-location-dot"></i> Maps</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2025 Lumière Coffee. All rights reserved.</p>
       <div class="footer-socials">
-        <a href="#" class="social-btn">ig</a>
-        <a href="#" class="social-btn">wa</a>
-        <a href="#" class="social-btn">tk</a>
+        <a href="https://www.instagram.com/lumiere.coffe/" class="social-btn">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/6281943445436?text=Halo%20Lumi%C3%A8re%20Coffee%2C%20saya%20ingin%20bertanya..." class="social-btn">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://www.google.com/maps/place/Lumière+Coffee/@-4.7775235,104.8385857,17z/data=!3m1!4b1!4m6!3m5!1s0x2e38af000b72d533:0x89598480a6aaab41!8m2!3d-4.7775235!4d104.8385857!16s%2Fm%2F01q2j9j" class="social-btn">
+          <i class="fa-solid fa-location-dot"></i>
+        </a>
       </div>
     </div>
   </footer>
 
   <script>
-    // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
@@ -1398,7 +1369,6 @@
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-    // Tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1406,7 +1376,6 @@
       });
     });
 
-    // Nav scroll effect
     window.addEventListener('scroll', () => {
       document.querySelector('nav').style.boxShadow =
         window.scrollY > 50 ? '0 4px 30px rgba(28,15,7,0.1)' : 'none';

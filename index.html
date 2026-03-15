@@ -540,6 +540,81 @@
     .menu-card-featured .menu-card-footer { border-color: rgba(201,150,90,0.2); }
     .menu-card-featured .menu-add { background: var(--gold); }
 
+    /* MENU SHOWCASE */
+    .menu-showcase {
+      position: relative;
+      margin-top: 3.5rem;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 320px;
+    }
+
+    .menu-showcase-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: scale(1.04);
+      transition: transform 6s ease;
+    }
+
+    .menu-showcase:hover .menu-showcase-img {
+      transform: scale(1);
+    }
+
+    .menu-showcase-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(28,15,7,0.82) 0%,
+        rgba(28,15,7,0.45) 55%,
+        rgba(28,15,7,0.1) 100%
+      );
+      display: flex;
+      align-items: center;
+      padding: 3rem 4rem;
+    }
+
+    .menu-showcase-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,150,90,0.45);
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .menu-showcase-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+
+    .menu-showcase-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .menu-showcase-desc {
+      font-size: 0.88rem;
+      color: rgba(245,239,228,0.65);
+      font-weight: 300;
+      max-width: 340px;
+      line-height: 1.7;
+    }
+
+    .menu-showcase-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
     /* EXPERIENCE */
     .experience {
       background: var(--espresso);
@@ -1042,9 +1117,6 @@
       <div class="about-img-card">
         <img src="img/menu2.jpeg" alt="Menu Pilihan" style="width:100%;height:100%;object-fit:cover;" />
       </div>
-      <div class="about-img-card" style="grid-column:span 2; aspect-ratio:16/7; transform:none;">
-        <img src="img/all_menu.jpeg" alt="Semua Menu" style="width:100%;height:100%;object-fit:cover;" />
-      </div>
     </div>
     <div class="about-text reveal">
       <p class="section-label">Our Story</p>
@@ -1135,6 +1207,18 @@
         <div class="menu-card-footer">
           <span class="menu-price">Rp 10.000</span>
           <!-- <button class="menu-add">+</button> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL MENU SHOWCASE -->
+    <div class="menu-showcase reveal">
+      <img src="img/all_menu.jpeg" alt="Semua Menu Lumière" class="menu-showcase-img" />
+      <div class="menu-showcase-overlay">
+        <div class="menu-showcase-inner">
+          <span class="menu-showcase-tag">Our Complete Menu</span>
+          <h3 class="menu-showcase-title">Semua tersedia <em>untuk kamu</em></h3>
+          <p class="menu-showcase-desc">Dari kopi single origin hingga makanan ringan — pilihan lengkap yang siap memanjakan selera.</p>
         </div>
       </div>
     </div>
